@@ -2,6 +2,49 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
 
+## Project Overview
+A comprehensive task management dashboard for software engineers with login functionality.
+
+## Features
+- Secure login system
+- Task management (Pending and Completed tasks)
+- Add, complete, and track tasks
+- Responsive design
+
+## Deployment
+
+### Prerequisites
+- Node.js (v18+)
+- Angular CLI
+- GitHub Account
+
+### Local Development
+1. Clone the repository
+2. Run `npm install`
+3. Run `ng serve`
+
+### Deployment to GitHub Pages
+1. Create a GitHub repository
+2. Push code to GitHub
+3. Enable GitHub Pages in repository settings
+4. GitHub Actions will automatically deploy
+
+## Login Credentials
+- Username: sweekruth
+- Password: 8792574818
+
+## Troubleshooting
+- Ensure all dependencies are installed
+- Check browser console for any errors
+- Verify network connectivity
+
+## Technologies
+- Angular
+- TypeScript
+- SCSS
+- Bootstrap
+- Font Awesome
+
 ## Development server
 
 To start a local development server, run:

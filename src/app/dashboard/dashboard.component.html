@@ -1,0 +1,91 @@
+<div class="dashboard-container">
+  <div class="sidebar">
+    <div class="logo">
+      <h2>Employee Dashboard</h2>
+    </div>
+    <nav>
+      <ul>
+        <li>
+          <a href="#" (click)="openAddTaskModal()">
+            <i class="fas fa-plus"></i> Add Task
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  
+  <div class="main-content">
+    <header>
+      <h1>Welcome, Sweekruth</h1>
+      <button class="btn btn-logout" (click)="logout()">Logout</button>
+    </header>
+    
+    <div class="task-board">
+      <div class="task-column pending">
+        <h3>Pending Tasks</h3>
+        <div class="task-list">
+          <div class="task" *ngFor="let task of pendingTasks">
+            <div class="task-header">
+              <h4>{{ task.title }}</h4>
+              <span class="badge badge-warning">Pending</span>
+            </div>
+            <p>{{ task.description }}</p>
+            <div class="task-actions">
+              <button class="btn btn-success" (click)="completeTask(task)">Complete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="task-column completed">
+        <h3>Completed Tasks</h3>
+        <div class="task-list">
+          <div class="task" *ngFor="let task of completedTasks">
+            <div class="task-header">
+              <h4>{{ task.title }}</h4>
+              <span class="badge badge-success">Completed</span>
+            </div>
+            <p>{{ task.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Task Modal -->
+<div class="modal" *ngIf="showAddTaskModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Task</h5>
+        <button type="button" class="close" (click)="closeAddTaskModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addTask()">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" [(ngModel)]="newTask.title" name="title" required>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" [(ngModel)]="newTask.description" name="description" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Priority</label>
+            <select class="form-control" [(ngModel)]="newTask.priority" name="priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Estimated Hours</label>
+            <input type="number" class="form-control" [(ngModel)]="newTask.estimatedHours" name="estimatedHours">
+          </div>
+          <button type="submit" class="btn btn-primary">Create Task</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

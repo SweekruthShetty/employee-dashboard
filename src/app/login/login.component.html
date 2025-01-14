@@ -1,0 +1,41 @@
+<div class="login-container">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>Employee Dashboard</h1>
+    </div>
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="username" 
+          name="username" 
+          [(ngModel)]="username" 
+          required
+        >
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          id="password" 
+          name="password" 
+          [(ngModel)]="password" 
+          required
+        >
+      </div>
+      <button 
+        type="submit" 
+        class="btn btn-primary" 
+        [disabled]="!loginForm.form.valid"
+      >
+        Login
+      </button>
+      <div *ngIf="loginError" class="alert alert-danger mt-3">
+        Invalid username or password
+      </div>
+    </form>
+  </div>
+</div>
