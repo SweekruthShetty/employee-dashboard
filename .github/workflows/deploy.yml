@@ -27,7 +27,7 @@ jobs:
         run: |
           npm ci
       
-      - name: Build Application
+      - name: Build
         run: |
           npm run build -- --configuration=production --base-href=/employee-dashboard/
       
