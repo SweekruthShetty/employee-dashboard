@@ -26,42 +26,14 @@ jobs:
       - name: Install Dependencies
         run: |
           npm ci
-          npm install -g @angular/cli
-      
-      - name: Verbose Dependency Installation
-        run: |
-          echo "NPM Cache:"
-          npm cache verify
-          echo "Installed packages:"
-          npm list --depth=0
       
       - name: Build Application
         run: |
-          set -x  # Enable verbose output
           npm run build -- --configuration=production --base-href=/employee-dashboard/
-        shell: bash
       
-      - name: Diagnose Build Failure
-        if: failure()
+      - name: List Build Output
         run: |
-          echo "Build failed. Checking npm and Angular CLI versions:"
-          node --version
-          npm --version
-          ng version
-          echo "Listing project files:"
-          ls -la
-          echo "Checking package.json:"
-          cat package.json
-      
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: build-logs
-          path: |
-            npm-debug.log
-            angular.log
-            build.log
+          ls -la dist/employee-dashboard
       
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
@@ -79,7 +51,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
-      - name: Verify Deployment
-        run: |
-          echo "Deployment URL: ${{ steps.deployment.outputs.page_url }}"
