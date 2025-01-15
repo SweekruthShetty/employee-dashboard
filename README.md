@@ -1,37 +1,44 @@
-# EmployeeDashboard
+# Employee Dashboard
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
 
 ## Project Overview
-A comprehensive task management dashboard for software engineers with login functionality.
+A comprehensive task management application for software engineers, featuring secure login and task tracking.
 
 ## Features
 - Secure login system
 - Task management (Pending and Completed tasks)
-- Add, complete, and track tasks
 - Responsive design
+- Bootstrap and Font Awesome integration
 
-## Deployment
-
-### Prerequisites
-- Node.js (v18+)
+## Prerequisites
+- Node.js (v20+)
 - Angular CLI
-- GitHub Account
+- Git
 
-### Local Development
+## Local Development
 1. Clone the repository
-2. Run `npm install`
-3. Run `ng serve`
-
-### Deployment to GitHub Pages
-1. Create a GitHub repository
-2. Push code to GitHub
-3. Enable GitHub Pages in repository settings
-4. GitHub Actions will automatically deploy
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start development server:
+   ```bash
+   ng serve
+   ```
+4. Open browser to `http://localhost:4200`
 
 ## Login Credentials
-- Username: sweekruth
-- Password: 8792574818
+- Username: `sweekruth`
+- Password: `8792574818`
+
+## Deployment
+The application is deployed automatically to GitHub Pages using GitHub Actions.
+
+### Manual Deployment
+```bash
+ng build --configuration=production
+```
 
 ## Troubleshooting
 - Ensure all dependencies are installed
@@ -39,11 +46,11 @@ A comprehensive task management dashboard for software engineers with login func
 - Verify network connectivity
 
 ## Technologies
-- Angular
+- Angular 19
 - TypeScript
-- SCSS
-- Bootstrap
+- Bootstrap 5
 - Font Awesome
+- SCSS
 
 ## Development server
 
@@ -96,6 +103,13 @@ ng e2e
 ```
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch
+3. Commit changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## Additional Resources
 
