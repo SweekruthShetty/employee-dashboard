@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng deploy"
+    "predeploy": "ng build --configuration=production --base-href=/employee-dashboard/",
+    "deploy": "gh-pages -d dist/employee-dashboard"
   },
   "private": true,
   "dependencies": {
@@ -31,6 +32,7 @@
     "@angular/cli": "^19.0.7",
     "@angular/compiler-cli": "^19.0.0",
     "@types/jasmine": "~5.1.0",
+    "gh-pages": "^6.1.1",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

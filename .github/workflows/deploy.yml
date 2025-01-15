@@ -28,21 +28,40 @@ jobs:
           npm ci
           npm install -g @angular/cli
       
-      - name: Verify Configuration
+      - name: Verbose Dependency Installation
         run: |
-          echo "Current directory: $(pwd)"
-          echo "Node version: $(node --version)"
-          echo "npm version: $(npm --version)"
-          echo "Angular CLI version: $(ng version)"
+          echo "NPM Cache:"
+          npm cache verify
+          echo "Installed packages:"
+          npm list --depth=0
       
       - name: Build Application
         run: |
+          set -x  # Enable verbose output
           npm run build -- --configuration=production --base-href=/employee-dashboard/
+        shell: bash
       
-      - name: List Build Output
+      - name: Diagnose Build Failure
+        if: failure()
         run: |
-          ls -la dist/employee-dashboard
-          cat dist/employee-dashboard/index.html
+          echo "Build failed. Checking npm and Angular CLI versions:"
+          node --version
+          npm --version
+          ng version
+          echo "Listing project files:"
+          ls -la
+          echo "Checking package.json:"
+          cat package.json
+      
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-logs
+          path: |
+            npm-debug.log
+            angular.log
+            build.log
       
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
