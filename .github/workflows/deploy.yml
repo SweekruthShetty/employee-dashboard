@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
       
       - name: Set up Node.js
@@ -23,17 +23,34 @@ jobs:
           node-version: 20
           cache: 'npm'
       
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
       - name: Install Dependencies
         run: |
           npm ci
       
-      - name: Build
+      - name: Diagnostic Information
+        run: |
+          echo "Node version: $(node --version)"
+          echo "NPM version: $(npm --version)"
+          echo "Angular CLI version: $(npx ng version)"
+          pwd
+          ls -la
+      
+      - name: Build Application
         run: |
           npm run build -- --configuration=production --base-href=/employee-dashboard/
       
       - name: List Build Output
         run: |
           ls -la dist/employee-dashboard
+          cat dist/employee-dashboard/index.html
       
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
@@ -51,3 +68,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Verify Deployment
+        run: |
+          echo "Deployment URL: ${{ steps.deployment.outputs.page_url }}"
