@@ -3,6 +3,8 @@ name: Deploy Angular App to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -40,6 +42,9 @@ jobs:
   build-and-deploy:
     needs: lint-and-test
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -72,7 +77,20 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist/employee-dashboard'
+          retention-days: 1
       
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Verify Deployment
+        run: |
+          echo "Deployment URL: ${{ steps.deployment.outputs.page_url }}"
+        if: success()
+      
+      - name: Diagnose Deployment Failure
+        if: failure()
+        run: |
+          echo "Deployment failed. Checking build artifacts and logs."
+          ls -la ./dist/employee-dashboard
+          cat ./dist/employee-dashboard/index.html || echo "index.html not found"
