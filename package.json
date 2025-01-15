@@ -8,6 +8,7 @@
     "build:dev": "ng build --configuration=development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "clean": "rimraf dist && rimraf node_modules/.cache",
     "prepare": "husky install"

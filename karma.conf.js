@@ -10,8 +10,10 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
-      jasmine: {},
-      clearContext: false
+      clearContext: false,
+      jasmine: {
+        random: false
+      }
     },
     jasmineHtmlReporter: {
       suppressAll: true
@@ -29,9 +31,15 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeHeadlessCI: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu']
+        flags: [
+          '--no-sandbox', 
+          '--disable-gpu', 
+          '--disable-dev-shm-usage',
+          '--remote-debugging-port=9222'
+        ]
       }
     },
-    restartOnFileChange: true
+    singleRun: true,
+    restartOnFileChange: false
   });
 };
