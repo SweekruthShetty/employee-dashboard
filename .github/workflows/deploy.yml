@@ -28,9 +28,21 @@ jobs:
           npm ci
           npm install -g @angular/cli
       
+      - name: Debug Information
+        run: |
+          pwd
+          ls -la
+          node --version
+          npm --version
+          ng version
+      
       - name: Build
         run: |
           ng build --configuration=production --base-href=/employee-dashboard/
+      
+      - name: List Build Output
+        run: |
+          ls -la dist/employee-dashboard
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
