@@ -28,15 +28,16 @@ jobs:
       - name: Install Dependencies
         run: |
           npm ci
+          npm ls || true
       
       - name: Run Linter
         run: |
-          npm run lint
+          npm run lint:fix
         continue-on-error: true
       
-      - name: Run Tests
+      - name: Run Tests with Coverage
         run: |
-          npm run test:ci
+          npm run test:coverage
         continue-on-error: true
 
   build-and-deploy:
@@ -58,6 +59,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm ci
+          npm ls || true
       
       - name: Validate Configuration
         run: |
@@ -65,10 +67,14 @@ jobs:
           cat package.json
           cat angular.json
       
-      - name: Build Application
+      - name: Build Application (Verbose)
         run: |
-          npm run clean
-          npm run build
+          npm run build:verbose
+      
+      - name: List Build Artifacts
+        run: |
+          ls -la dist/employee-dashboard
+          cat dist/employee-dashboard/index.html || echo "index.html not found"
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -94,3 +100,5 @@ jobs:
           echo "Deployment failed. Checking build artifacts and logs."
           ls -la ./dist/employee-dashboard
           cat ./dist/employee-dashboard/index.html || echo "index.html not found"
+          echo "Checking npm logs:"
+          cat ~/.npm/_logs/* || echo "No npm logs found"
