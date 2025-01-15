@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'bootstrap/dist/css/bootstrap.min.css';
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'bootstrap/scss/bootstrap';
+
+// Remove Fontawesome import if not used
+// If you want to use Fontawesome, install it first: npm install @fortawesome/fontawesome-free
+// @import '@fortawesome/fontawesome-free/css/all.min.css';
 
 * {
   box-sizing: border-box;
