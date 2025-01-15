@@ -28,23 +28,23 @@ jobs:
           npm ci
           npm install -g @angular/cli
       
-      - name: Debug Information
+      - name: Verify Configuration
         run: |
-          pwd
-          ls -la
-          node --version
-          npm --version
-          ng version
+          echo "Current directory: $(pwd)"
+          echo "Node version: $(node --version)"
+          echo "npm version: $(npm --version)"
+          echo "Angular CLI version: $(ng version)"
       
-      - name: Build
+      - name: Build Application
         run: |
-          ng build --configuration=production --base-href=/employee-dashboard/
+          npm run build -- --configuration=production --base-href=/employee-dashboard/
       
       - name: List Build Output
         run: |
           ls -la dist/employee-dashboard
+          cat dist/employee-dashboard/index.html
       
-      - name: Upload artifact
+      - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist/employee-dashboard
@@ -60,3 +60,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+      - name: Verify Deployment
+        run: |
+          echo "Deployment URL: ${{ steps.deployment.outputs.page_url }}"
