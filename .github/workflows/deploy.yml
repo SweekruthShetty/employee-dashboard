@@ -23,34 +23,55 @@ jobs:
           node-version: 20
           cache: 'npm'
       
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      
-      - name: Install Dependencies
+      - name: Verbose System Information
         run: |
-          npm ci
-      
-      - name: Diagnostic Information
-        run: |
+          echo "Operating System: $(uname -a)"
           echo "Node version: $(node --version)"
           echo "NPM version: $(npm --version)"
-          echo "Angular CLI version: $(npx ng version)"
+          echo "Current directory contents:"
           pwd
           ls -la
       
+      - name: Install Dependencies
+        run: |
+          npm cache clean --force
+          npm install --verbose
+      
+      - name: Validate Configuration
+        run: |
+          npx ng version
+          cat package.json
+          cat angular.json
+      
       - name: Build Application
         run: |
+          set -x
+          npm run clean
           npm run build -- --configuration=production --base-href=/employee-dashboard/
+        shell: bash
+      
+      - name: Diagnose Build Issues
+        if: failure()
+        run: |
+          echo "Build failed. Checking npm logs:"
+          cat ~/.npm/_logs/*
+          echo "Checking Angular build logs:"
+          find . -name "angular.log"
       
       - name: List Build Output
         run: |
           ls -la dist/employee-dashboard
-          cat dist/employee-dashboard/index.html
+          cat dist/employee-dashboard/index.html || echo "index.html not found"
+      
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-logs
+          path: |
+            ~/.npm/_logs
+            dist
+            angular.log
       
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
